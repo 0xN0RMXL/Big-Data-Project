@@ -1,0 +1,20 @@
+═══════════════════════════════════════════════════
+              TEAM INFORMATION
+═══════════════════════════════════════════════════
+
+Project Title        : Big Data Classification — Titanic Survival Prediction
+
+Team Member 1        : Omar Ammar
+Team Member 2        : Kareem Reda
+Team Member 3        : Mohammed El Saed
+
+University           : Mansoura University
+Faculty              : Faculty of Computers and Information
+Course               : Selected Topics in Information Systems
+Academic Year        : 2025-2026
+
+Algorithm Used       : Decision Tree Classification
+Tool Used            : Apache Spark (PySpark)
+Dataset              : Titanic Dataset (891 records)
+
+═══════════════════════════════════════════════════

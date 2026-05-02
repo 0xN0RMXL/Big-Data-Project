@@ -1,0 +1,201 @@
+═══════════════════════════════════════════════════════════════
+          PHASE 1 - ENVIRONMENT SETUP GUIDE
+          For Windows 10/11 (Anaconda + PySpark)
+═══════════════════════════════════════════════════════════════
+
+This guide assumes you have NEVER installed programming tools before.
+Follow every step exactly.
+
+═══════════════════════════════════════════════════════════════
+1. INSTALL JAVA JDK 17 (Adoptium / Eclipse Temurin)
+═══════════════════════════════════════════════════════════════
+
+Why? Apache Spark is built on Java, so Java MUST be installed first.
+
+STEP 1.1 - Download Java
+--------------------------
+Open your web browser and go to this exact link:
+
+    https://adoptium.net/temurin/releases/?version=17
+
+On that page:
+- Find the table with downloads.
+- Look for the row that says:
+    Operating System : Windows
+    Architecture     : x64
+    Package Type     : JDK
+- Click the ".msi" installer link to download it.
+
+STEP 1.2 - Run the Installer
+--------------------------
+- Open your Downloads folder.
+- Double-click the file named something like: OpenJDK17U-jdk_x64_windows_hotspot_17.0.x.msi
+- Windows may show a security warning. Click "Run" or "Yes".
+- The installer opens. Click "Next" on every screen.
+- On the "Custom Setup" screen, leave everything default. Click "Next".
+- On the "Ready to Install" screen, click "Install".
+- Wait for the green progress bar to finish.
+- Click "Finish".
+
+STEP 1.3 - Set JAVA_HOME Environment Variable
+--------------------------
+You MUST tell Windows where Java is installed.
+
+- Click the Windows Start button and type: environment variables
+- Click "Edit the system environment variables" (it has a small gear icon).
+- A window called "System Properties" opens.
+- Click the button at the bottom right: "Environment Variables..."
+- Under the top box ("User variables for YOURNAME"), click "New..."
+- For "Variable name", type exactly: JAVA_HOME
+- For "Variable value", type the path where Java was installed.
+  The default path is usually:
+      C:\Program Files\Eclipse Adoptium\jdk-17.0.x-hotspot
+  (Replace x with the actual version number.)
+  TIP: You can open File Explorer, go to C:\Program Files\Eclipse Adoptium\, open the jdk-17 folder, then copy the path from the address bar and paste it here.
+- Click "OK".
+
+STEP 1.4 - Add Java to PATH
+--------------------------
+- Still in the "Environment Variables" window, look under "User variables" for a variable named "Path".
+- Click on "Path", then click "Edit..."
+- A small window opens showing a list of folder paths.
+- Click "New" on the right side.
+- Type exactly this path (or adjust the version number to match yours):
+      C:\Program Files\Eclipse Adoptium\jdk-17.0.x-hotspot\bin
+- Click "OK", then "OK" again, then "OK" one last time to close all windows.
+
+VERIFICATION STEP
+--------------------------
+- Press Windows Key + R on your keyboard.
+- Type: cmd
+- Press Enter. (A black window opens - this is Command Prompt.)
+- Type exactly: java -version
+- Press Enter.
+
+EXPECTED OUTPUT (something like this):
+    openjdk version "17.0.x" 2024-xx-xx
+    OpenJDK Runtime Environment Temurin-17.0.x+...
+    OpenJDK 64-Bit Server VM Temurin-17.0.x+...
+
+If you see version 17, Java is installed correctly!
+If you see "'java' is not recognized", your PATH is wrong. Recheck Step 1.4.
+
+
+═══════════════════════════════════════════════════════════════
+2. INSTALL ANACONDA (Python Distribution)
+═══════════════════════════════════════════════════════════════
+
+Why? Anaconda gives you Python plus all the tools to install extra packages like PySpark.
+
+STEP 2.1 - Download Anaconda
+--------------------------
+Open your web browser and go to:
+
+    https://www.anaconda.com/download
+
+- The page should auto-detect Windows. If not, click "Windows".
+- Click the big blue "Download" button for the Python 3.x version (64-Bit Graphical Installer).
+- The file is large (about 800 MB). Wait for it to finish downloading.
+
+STEP 2.2 - Run the Anaconda Installer
+--------------------------
+- Open your Downloads folder.
+- Double-click the file named something like: Anaconda3-2024.xx-Windows-x86_64.exe
+- Click "Next", then "I Agree".
+- Choose "Just Me (recommended)" and click "Next".
+- Leave the default install location and click "Next".
+- On the "Advanced Options" screen:
+    CHECK (tick) the box: "Register Anaconda3 as my default Python 3.x"
+    LEAVE UNCHECKED: "Add Anaconda3 to my PATH environment variable"
+      (This is recommended by Anaconda to avoid conflicts.)
+- Click "Install". This will take 5-10 minutes.
+- When it finishes, click "Next", then "Next", then "Finish".
+  (You can uncheck the boxes about opening tutorials if you want.)
+
+STEP 2.3 - Open Anaconda Prompt
+--------------------------
+This is VERY important. You must use Anaconda Prompt, NOT regular Command Prompt.
+
+- Click the Windows Start button.
+- Type: Anaconda Prompt
+- Click the app called "Anaconda Prompt (Anaconda3)".
+- A black window opens. You will see text like:
+    (base) C:\Users\YourName>
+
+VERIFICATION STEP
+--------------------------
+Inside the Anaconda Prompt window, type:
+    python --version
+
+EXPECTED OUTPUT:
+    Python 3.11.x   (or 3.10.x, 3.12.x - any 3.x is fine)
+
+
+═══════════════════════════════════════════════════════════════
+3. INSTALL PYSPARK
+═══════════════════════════════════════════════════════════════
+
+Why? PySpark is the Python library that lets you write Apache Spark code.
+
+STEP 3.1 - Install via pip
+--------------------------
+Make sure you are inside the Anaconda Prompt window (you see the (base) prefix).
+
+Type exactly this command and press Enter:
+    pip install pyspark
+
+Wait for the installation to finish. You will see many lines of text downloading and installing packages. This is normal.
+
+VERIFICATION STEP
+--------------------------
+Inside the Anaconda Prompt, type:
+    python -c "import pyspark; print(pyspark.__version__)"
+
+EXPECTED OUTPUT (something like):
+    3.5.0
+
+If you see a version number, PySpark is installed!
+
+
+═══════════════════════════════════════════════════════════════
+4. DOWNLOAD THE TITANIC DATASET
+═══════════════════════════════════════════════════════════════
+
+STEP 4.1 - Get the CSV file
+--------------------------
+Open your web browser and go to this direct download link:
+
+    https://raw.githubusercontent.com/datasciencedoc/data/master/titanic.csv
+
+Right-click anywhere on the page and choose "Save As..." (or press Ctrl+S).
+Save the file as: titanic.csv
+Move the file into your project folder under the data/ subfolder:
+    d:\College Tasks\Big Data Project\data\titanic.csv
+
+VERIFICATION STEP
+--------------------------
+Open the file in Notepad (right-click -> Open With -> Notepad).
+You should see the first line:
+    PassengerId,Survived,Pclass,Name,Sex,Age,SibSp,Parch,Ticket,Fare,Cabin,Embarked
+
+This confirms the dataset downloaded correctly.
+
+
+═══════════════════════════════════════════════════════════════
+5. COMMON ERRORS & FIXES
+═══════════════════════════════════════════════════════════════
+
+ERROR 1: "'java' is not recognized as an internal or external command"
+FIX: Your JAVA_HOME or Path is not set correctly. Restart your computer after setting environment variables so they take effect.
+
+ERROR 2: "Java heap space" or "OutOfMemoryError"
+FIX: Your Java settings are too low. This is rare with the default settings. If it happens, close other programs and try again.
+
+ERROR 3: "No module named 'pyspark'"
+FIX: You are not in Anaconda Prompt, or you installed PySpark in a different Python environment. Open Anaconda Prompt and run: pip install pyspark
+
+ERROR 4: "Failed to find Spark jars directory"
+FIX: PySpark did not install fully. Run: pip install --upgrade pyspark
+
+ERROR 5: "Python was not found"
+FIX: You are in regular Command Prompt, not Anaconda Prompt. Search "Anaconda Prompt" in the Start menu.
